@@ -16,8 +16,12 @@ def sum_digits(n):
 
 def is_prime(n):
 
+    # One itself is a prime number, but not for the purpose of this problem
+    if n == 1:
+        return False
+
     # Prime numbers that will be chatch on the tests
-    if n in [1, 2, 3, 5]:
+    elif n in [2, 3, 5]:
         return True
 
     # Check if the number is even
@@ -39,14 +43,40 @@ def is_prime(n):
     else:
         return True
 
-def create_prime_list(n):
-    prime_list = []
-
-    for x in range(n + 1):
-        if is_prime(x):
-            prime_list.append(x)
-
-    return prime_list
 
 def find_prime_factors(n):
-    primes = create_prime_list(n)
+    # Store the quotient of the division by the prime factors
+    remaining = n
+
+    # Initiate a variable to store the factors
+    factors = []
+
+    # Start i (counter) as 2, because is the first prime factor to be used
+    i = 2
+
+    # Iterates from 2 to the number specified to find the prime factors
+    # Stops when it finds all the prime factors (remaining = 1)
+
+    # I used break just above, but I don't understand why it does not evaluate
+    # it here
+    while i <= n or remaining == 1:
+        if is_prime(i):
+            while remaining % i == 0:
+                factors.append(i)
+                remaining /= i
+        else:
+            pass
+
+        i += 1
+        
+        # I'm using it here because it seems not to evaluate on while clause
+        if remaining == 1:
+            break
+        else:
+            pass
+
+    return factors
+
+def return_largest_prime_factor(n):
+    prime_factors = find_prime_factors(n)
+    return max(prime_factors)
